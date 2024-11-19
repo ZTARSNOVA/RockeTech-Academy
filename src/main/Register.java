@@ -28,9 +28,11 @@ public class Register extends JPanel {
         txtUser.grabFocus();
     }
 
+    /*
     public void addEventBackLogin(ActionListener event) {
         cmdBackLogin.addActionListener(event);
     }
+    */
 
     public void addEventCreateAccount(ActionListener event) {
         myButton1.addActionListener(event);
