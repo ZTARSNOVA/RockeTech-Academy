@@ -58,7 +58,7 @@ public class Register extends JPanel {
         txtPass = new swing.MyPassword();
         jLabel3 = new JLabel();
         myButton1 = new swing.MyButton();
-        cmdBackLogin = new JButton();
+        //cmdBackLogin = new JButton();
         jLabel4 = new JLabel();
         txtPass1 = new swing.MyPassword();
         jLabel5 = new JLabel();
@@ -67,6 +67,7 @@ public class Register extends JPanel {
         setOpaque(false);
 
         jLabel1.setText("User Name");
+        jLabel1.setForeground(Color.WHITE);
 
         jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel2.setText("Register");
@@ -74,17 +75,24 @@ public class Register extends JPanel {
         jLabel2.setForeground(Color.WHITE);
 
         jLabel3.setText("Password");
+        jLabel3.setForeground(Color.WHITE);
+
         jLabel4.setText("Confirm Password");
+        jLabel4.setForeground(Color.WHITE);
+
         jLabel5.setText("Email");
+        jLabel5.setForeground(Color.WHITE);
 
         RoundedButton myButton1 = new RoundedButton("CREATE ACCOUNT", 15, Color.BLACK, Color.WHITE);
 
+        /*
         cmdBackLogin.setFont(new Font("sansserif", 1, 12));
         cmdBackLogin.setForeground(new Color(0, 0, 0));
         cmdBackLogin.setText("Back to Login");
         cmdBackLogin.setContentAreaFilled(false);
         cmdBackLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        */
+        
         // Evento para el botón de registro
         myButton1.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +129,7 @@ public class Register extends JPanel {
                         .addComponent(jLabel3)
                         .addComponent(txtPass, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(myButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdBackLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        //.addComponent(cmdBackLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addComponent(txtPass1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5))
@@ -151,7 +159,7 @@ public class Register extends JPanel {
                     .addGap(30, 30, 30)
                     .addComponent(myButton1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(cmdBackLogin)
+                    //.addComponent(cmdBackLogin)
                     .addContainerGap(50, Short.MAX_VALUE))
         );
 
