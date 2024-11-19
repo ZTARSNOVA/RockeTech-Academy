@@ -23,9 +23,12 @@ public class Login extends javax.swing.JPanel {
         txtUser.grabFocus();
     }
 
+   /*
     public void addEventRegister(ActionListener event) {
         cmdRegister.addActionListener(event);
     }
+
+    */
 
     public JButton getHomeButton() {
         return homeButton;
@@ -57,12 +60,13 @@ public class Login extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         myButton1 = new swing.MyButton();
-        cmdRegister = new JButton();
+        //cmdRegister = new JButton();
         homeButton = new RoundedButton("Home", 15, Color.CYAN, Color.BLACK);
 
         setOpaque(false);
 
         jLabel1.setText("User Name");
+        jLabel1.setForeground(Color.WHITE);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Login");
@@ -70,10 +74,14 @@ public class Login extends javax.swing.JPanel {
         jLabel2.setForeground(Color.WHITE);
 
         jLabel3.setText("Password");
+        jLabel3.setForeground(Color.WHITE);
+
         jLabel4.setText("Email");
+        jLabel4.setForeground(Color.WHITE);
 
         RoundedButton myButton1 = new RoundedButton("SIGN UP", 15, Color.BLACK, Color.WHITE);
 
+        /*
         cmdRegister.setFont(new Font("sansserif", 1, 12));
         cmdRegister.setForeground(new Color(0, 0, 0));
         cmdRegister.setText("Register Now");
@@ -92,6 +100,8 @@ public class Login extends javax.swing.JPanel {
                 dialog.setVisible(true);
             }
         });
+
+         */
 
         // Evento para el boton de Login
         myButton1.addActionListener(new ActionListener() {
@@ -125,7 +135,7 @@ public class Login extends javax.swing.JPanel {
                         .addComponent(jLabel3)
                         .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        //.addComponent(cmdRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(homeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap(50, Short.MAX_VALUE))
         );
@@ -149,7 +159,7 @@ public class Login extends javax.swing.JPanel {
                     .addGap(30, 30, 30)
                     .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(cmdRegister)
+                    //.addComponent(cmdRegister)
                     .addGap(18, 18, 18)
                     .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(50, Short.MAX_VALUE))
