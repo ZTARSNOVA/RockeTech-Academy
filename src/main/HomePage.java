@@ -104,7 +104,9 @@ public class HomePage extends JFrame {
 
         trainingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showMessage("Courses Page");
+
+                new CourseEnrollment().setVisible(true);
+                dispose();
             }
         });
 
