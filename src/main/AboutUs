@@ -1,0 +1,64 @@
+package main;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class AboutUs extends JFrame {
+
+    public AboutUs() {
+        // Configuración de la ventana principal
+        setTitle("About Us");
+        setSize(400, 180);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Panel principal
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout(10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Título
+        JLabel title = new JLabel("About Us", JLabel.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        panel.add(title, BorderLayout.NORTH);
+
+        // Combo box para seleccionar integrantes
+        String[] integrantes = {"Claudio", "Luciana", "Camila", "Boris"};
+        JComboBox<String> comboBox = new JComboBox<>(integrantes);
+        panel.add(comboBox, BorderLayout.CENTER);
+
+        // Área de texto para mostrar información
+        JTextArea infoArea = new JTextArea();
+        infoArea.setEditable(false);
+        infoArea.setLineWrap(true);
+        infoArea.setWrapStyleWord(true);
+        infoArea.setText("Seleccione un integrante para ver su información.");
+        panel.add(new JScrollPane(infoArea), BorderLayout.SOUTH);
+
+        // Acción del combo box
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selected = (String) comboBox.getSelectedItem();
+                switch (selected) {
+                    case "Claudio":
+                        infoArea.setText("Claudio está cursando la carrera de Ciencia de Datos.");
+                        break;
+                    case "Luciana":
+                        infoArea.setText("Luciana está cursando la carrera de Ciencia de Datos.");
+                        break;
+                    case "Camila":
+                        infoArea.setText("Camila está cursando la carrera de Ciencia de Datos.");
+                        break;
+                    case "Boris":
+                        infoArea.setText("Boris está cursando la carrera de Ciencia de Datos.");
+                        break;
+                }
+            }
+        });
+
+        add(panel);
+    }
+}
