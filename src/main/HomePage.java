@@ -29,9 +29,9 @@ public class HomePage extends JFrame {
         programsButton.setBounds(400, 45, 150, 30);
         backgroundPanel.add(programsButton);
 
-        RoundedButton trainingButton = new RoundedButton("Courses", 15, Color.WHITE, Color.BLACK);
-        trainingButton.setBounds(600, 45, 150, 30);
-        backgroundPanel.add(trainingButton);
+        RoundedButton coursesButton = new RoundedButton("Courses", 15, Color.WHITE, Color.BLACK);
+        coursesButton.setBounds(600, 45, 150, 30);
+        backgroundPanel.add(coursesButton);
 
         RoundedButton aboutUsButton = new RoundedButton("About us", 15, Color.WHITE, Color.BLACK);
         aboutUsButton.setBounds(800, 45, 150, 30);
@@ -95,26 +95,29 @@ public class HomePage extends JFrame {
             }
         });
 
-        // los botones de navegación
-        programsButton.addActionListener(new ActionListener() {
+        // las paginas (clases) navegación del Homepage
+
+        programsButton.addActionListener(new ActionListener() { // Integrante ->  Boris Alonso
             public void actionPerformed(ActionEvent e) {
                 showMessage("Programs Page");
             }
         });
 
-        trainingButton.addActionListener(new ActionListener() {
+        coursesButton.addActionListener(new ActionListener() { // Integrante -> Claudio Fernando
             public void actionPerformed(ActionEvent e) {
-
                 new CourseEnrollment().setVisible(true);
                 dispose();
             }
         });
 
-        aboutUsButton.addActionListener(new ActionListener() {
+        aboutUsButton.addActionListener(new ActionListener() { // Integrante -> Luciana Gianmariel
             public void actionPerformed(ActionEvent e) {
-                showMessage("About us Page");
+                // Llamar a la nueva ventana AboutUs
+                new AboutUs().setVisible(true);
+                dispose();
             }
         });
+
 
         setTitle("RockeTech");
     }
