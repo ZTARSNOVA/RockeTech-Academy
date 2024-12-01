@@ -12,5 +12,12 @@ RockeTech Academy is a project dedicated to offering engaging and self-guided le
 
 
 # Login & Register
-![image](https://github.com/user-attachments/assets/c28342f3-374e-4cca-b27d-05ebc83c9375)
+![image](https://github.com/user-attachments/assets/dd181afb-f3fc-4330-99f2-0dcb9ca59fab)
+
+# Courses
+![image](https://github.com/user-attachments/assets/4e27ea42-c2cb-429e-bdb5-bb599c34496b)
+
+
+# About Us
+![image](https://github.com/user-attachments/assets/53ea052e-8251-4d36-9b9a-3491ab0c4600)
 
