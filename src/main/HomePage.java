@@ -1,10 +1,10 @@
 package main;
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.io.IOException;
 import javax.swing.*;
 
 public class HomePage extends JFrame {
@@ -24,26 +24,32 @@ public class HomePage extends JFrame {
         add(backgroundPanel, BorderLayout.CENTER);
         backgroundPanel.setLayout(null);
 
-        // Botones de navegación
-        RoundedButton programsButton = new RoundedButton("Programs", 15, Color.WHITE, Color.BLACK);
-        programsButton.setBounds(400, 45, 150, 30);
-        backgroundPanel.add(programsButton);
+        Font OrbitronFont;
+        try {
+            OrbitronFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/Orbitron-VariableFont_wght.ttf"))
+                    .deriveFont(Font.BOLD, 40f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            OrbitronFont = new Font("Orbitron-VariableFont_wght", Font.BOLD, 40);
+        }
 
-        RoundedButton coursesButton = new RoundedButton("Courses", 15, Color.WHITE, Color.BLACK);
-        coursesButton.setBounds(600, 45, 150, 30);
-        backgroundPanel.add(coursesButton);
-
-        RoundedButton aboutUsButton = new RoundedButton("About us", 15, Color.WHITE, Color.BLACK);
-        aboutUsButton.setBounds(800, 45, 150, 30);
-        backgroundPanel.add(aboutUsButton);
-
-        // el titulo "RockeTech"
+        // Configuración del JLabel
         JLabel titleLabel = new JLabel("RockeTech");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
-        titleLabel.setForeground(Color.WHITE); // Establecer color del texto a negro
+        titleLabel.setFont(OrbitronFont);
+        titleLabel.setForeground(Color.WHITE); // Color del texto
         titleLabel.setBounds(200, 150, 1000, 50);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundPanel.add(titleLabel);
+
+
+        Font SpaceMonoFont;
+        try {
+            SpaceMonoFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/SpaceMono-Regular.ttf"))
+                    .deriveFont(Font.PLAIN, 15f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            SpaceMonoFont = new Font("Arial", Font.PLAIN, 15);
+        }
 
         // El texto descriptivo
         JLabel descriptionLabel = new JLabel("Register today and access educational programs");
@@ -51,17 +57,17 @@ public class HomePage extends JFrame {
         JLabel descriptionLabel3 = new JLabel("in children's academic achievement.");
 
         descriptionLabel.setForeground(Color.WHITE);
-        descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+        descriptionLabel.setFont(SpaceMonoFont);
         descriptionLabel.setBounds(300, 240, 800, 50);
         descriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         descriptionLabel2.setForeground(Color.WHITE);
-        descriptionLabel2.setFont(new Font("Arial", Font.PLAIN, 15));
+        descriptionLabel2.setFont(SpaceMonoFont);
         descriptionLabel2.setBounds(300, 260, 800, 50);
         descriptionLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 
         descriptionLabel3.setForeground(Color.WHITE);
-        descriptionLabel3.setFont(new Font("Arial", Font.PLAIN, 15));
+        descriptionLabel3.setFont(SpaceMonoFont);
         descriptionLabel3.setBounds(300, 280, 800, 50);
         descriptionLabel3.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -69,17 +75,46 @@ public class HomePage extends JFrame {
         backgroundPanel.add(descriptionLabel2);
         backgroundPanel.add(descriptionLabel3);
 
-        // El boton "Get Started"
+        Font Orbitron2Font;
+        try {
+            Orbitron2Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/Orbitron-VariableFont_wght.ttf"))
+                    .deriveFont(Font.BOLD, 18f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            Orbitron2Font = new Font("Arial", Font.BOLD, 20);
+        }
+
+        // Botón "Programs"
+        RoundedButton programsButton = new RoundedButton("Programs", 15, Color.YELLOW, Color.BLACK);
+        programsButton.setFont(Orbitron2Font);
+        programsButton.setBounds(400, 45, 150, 30);
+        backgroundPanel.add(programsButton);
+
+        // Botón "Courses"
+        RoundedButton coursesButton = new RoundedButton("Courses", 15, Color.YELLOW, Color.BLACK);
+        coursesButton.setFont(Orbitron2Font);
+        coursesButton.setBounds(600, 45, 150, 30);
+        backgroundPanel.add(coursesButton);
+
+        // Botón "About Us"
+        RoundedButton aboutUsButton = new RoundedButton("About us", 15, Color.YELLOW, Color.BLACK);
+        aboutUsButton.setFont(Orbitron2Font);
+        aboutUsButton.setBounds(800, 45, 150, 30);
+        backgroundPanel.add(aboutUsButton);
+
+        // Botón "Get Started"
         RoundedButton getStartedButton = new RoundedButton("Get started", 30, Color.CYAN, Color.BLACK);
+        getStartedButton.setFont(Orbitron2Font);
         getStartedButton.setBounds(600, 340, 200, 70);
         backgroundPanel.add(getStartedButton);
 
-        // El boton "Login in"
+        // Botón "Login in"
         RoundedButton loginButton = new RoundedButton("Login in", 15, Color.BLACK, Color.WHITE);
+        loginButton.setFont(Orbitron2Font);
         loginButton.setBounds(1150, 45, 150, 30);
         backgroundPanel.add(loginButton);
 
-        // El boton "Get Started"
+        // Acción de los botones
         getStartedButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new Main().setVisible(true);
@@ -87,7 +122,6 @@ public class HomePage extends JFrame {
             }
         });
 
-        // El boton "Login in"
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new Main().setVisible(true);
@@ -95,9 +129,8 @@ public class HomePage extends JFrame {
             }
         });
 
-        // las paginas (clases) navegación del Homepage
-
-        programsButton.addActionListener(new ActionListener() { // Integrante ->  Boris Alonso
+        // Las paginas (clases) navegación del Homepage
+        programsButton.addActionListener(new ActionListener() { // Integrante -> Boris Alonso
             public void actionPerformed(ActionEvent e) {
                 showMessage("Programs Page");
             }
@@ -105,19 +138,17 @@ public class HomePage extends JFrame {
 
         coursesButton.addActionListener(new ActionListener() { // Integrante -> Claudio Fernando
             public void actionPerformed(ActionEvent e) {
-                new CourseEnrollment().setVisible(true);
+                new Courses().setVisible(true);
                 dispose();
             }
         });
 
         aboutUsButton.addActionListener(new ActionListener() { // Integrante -> Luciana Gianmariel
             public void actionPerformed(ActionEvent e) {
-                // Llamar a la nueva ventana AboutUs
                 new AboutUs().setVisible(true);
                 dispose();
             }
         });
-
 
         setTitle("RockeTech");
     }
@@ -147,6 +178,7 @@ public class HomePage extends JFrame {
         public BackgroundPanel(Image image) {
             this.image = image;
         }
+
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -171,6 +203,7 @@ public class HomePage extends JFrame {
             setFont(new Font("Arial", Font.BOLD, 20));
             setBorderPainted(false);
         }
+
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -180,6 +213,7 @@ public class HomePage extends JFrame {
             g2.dispose();
             super.paintComponent(g);
         }
+
         public void setContentAreaFilled(boolean b) {
             // area del contenido
         }
