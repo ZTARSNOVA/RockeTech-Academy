@@ -5,12 +5,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.*;
 import javax.swing.JOptionPane;
 import swing.MyPassword;
 import swing.MyTextField;
 
-public class Login extends javax.swing.JPanel {
+public class Login extends JPanel {
 
     private RoundedButton homeButton;
 
@@ -22,13 +22,6 @@ public class Login extends javax.swing.JPanel {
     public void login() {
         txtUser.grabFocus();
     }
-
-   /*
-    public void addEventRegister(ActionListener event) {
-        cmdRegister.addActionListener(event);
-    }
-
-    */
 
     public JButton getHomeButton() {
         return homeButton;
@@ -60,48 +53,59 @@ public class Login extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         myButton1 = new swing.MyButton();
-        //cmdRegister = new JButton();
+
+
+        Font Orbitron2Font;
+        try {
+            Orbitron2Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/Orbitron-VariableFont_wght.ttf"))
+                    .deriveFont(Font.BOLD, 18f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            Orbitron2Font = new Font("Arial", Font.BOLD, 18);
+        }
+
+        Font SpaceMonoFont;
+        try {
+            SpaceMonoFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/SpaceMono-Regular.ttf"))
+                    .deriveFont(Font.PLAIN, 15f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            SpaceMonoFont = new Font("Arial", Font.PLAIN, 15);
+        }
+
         homeButton = new RoundedButton("Home", 15, Color.CYAN, Color.BLACK);
+        homeButton.setFont(Orbitron2Font);
 
         setOpaque(false);
 
         jLabel1.setText("User Name");
+        jLabel1.setFont(SpaceMonoFont);
         jLabel1.setForeground(Color.WHITE);
+
+        Font Orbitron3Font;
+        try {
+            Orbitron3Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/Orbitron-VariableFont_wght.ttf"))
+                    .deriveFont(Font.BOLD, 48f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            Orbitron3Font = new Font("Orbitron", Font.BOLD, 48);
+        }
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Login");
-        jLabel2.setFont(new Font("Arial", Font.BOLD, 48));
+        jLabel2.setFont(Orbitron3Font);
         jLabel2.setForeground(Color.WHITE);
 
         jLabel3.setText("Password");
+        jLabel3.setFont(SpaceMonoFont);
         jLabel3.setForeground(Color.WHITE);
 
         jLabel4.setText("Email");
+        jLabel4.setFont(SpaceMonoFont);
         jLabel4.setForeground(Color.WHITE);
 
-        RoundedButton myButton1 = new RoundedButton("SIGN UP", 15, Color.BLACK, Color.WHITE);
-
-        /*
-        cmdRegister.setFont(new Font("sansserif", 1, 12));
-        cmdRegister.setForeground(new Color(0, 0, 0));
-        cmdRegister.setText("Register Now");
-        cmdRegister.setContentAreaFilled(false);
-        cmdRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        // Evento para el boton de registro
-        cmdRegister.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-                JDialog dialog = new JDialog();
-                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                dialog.setTitle("Registro completado");
-                dialog.setSize(300, 150);
-                dialog.setLocationRelativeTo(Login.this);
-                dialog.setVisible(true);
-            }
-        });
-
-         */
+        RoundedButton myButton1 = new RoundedButton("Sign up", 15, Color.BLACK, Color.WHITE);
+        myButton1.setFont(Orbitron2Font);
 
         // Evento para el boton de Login
         myButton1.addActionListener(new ActionListener() {
@@ -109,12 +113,10 @@ public class Login extends javax.swing.JPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 String username = txtUser.getText();
                 String password = new String(txtPass.getPassword());
-        
-                // Verificar el login usando BufferedReader
                 if (verificarLogin(username, password)) {
                     JOptionPane.showMessageDialog(Login.this, "Login exitoso");
                 } else {
-                    // Mostrar JDialog de datos incorrectos
+
                     JOptionPane.showMessageDialog(Login.this, "Los datos están incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -135,7 +137,6 @@ public class Login extends javax.swing.JPanel {
                         .addComponent(jLabel3)
                         .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        //.addComponent(cmdRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(homeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap(50, Short.MAX_VALUE))
         );
@@ -159,7 +160,6 @@ public class Login extends javax.swing.JPanel {
                     .addGap(30, 30, 30)
                     .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    //.addComponent(cmdRegister)
                     .addGap(18, 18, 18)
                     .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(50, Short.MAX_VALUE))
