@@ -28,11 +28,7 @@ public class Register extends JPanel {
         txtUser.grabFocus();
     }
 
-    /*
-    public void addEventBackLogin(ActionListener event) {
-        cmdBackLogin.addActionListener(event);
-    }
-    */
+
 
     public void addEventCreateAccount(ActionListener event) {
         myButton1.addActionListener(event);
@@ -60,7 +56,6 @@ public class Register extends JPanel {
         txtPass = new swing.MyPassword();
         jLabel3 = new JLabel();
         myButton1 = new swing.MyButton();
-        //cmdBackLogin = new JButton();
         jLabel4 = new JLabel();
         txtPass1 = new swing.MyPassword();
         jLabel5 = new JLabel();
@@ -68,32 +63,56 @@ public class Register extends JPanel {
         setBackground(new Color(255, 255, 255));
         setOpaque(false);
 
+        Font Orbitron2Font;
+        try {
+            Orbitron2Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/Orbitron-VariableFont_wght.ttf"))
+                    .deriveFont(Font.BOLD, 18f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            Orbitron2Font = new Font("Arial", Font.BOLD, 20);
+        }
+
+        Font SpaceMonoFont;
+        try {
+            SpaceMonoFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/SpaceMono-Regular.ttf"))
+                    .deriveFont(Font.PLAIN, 15f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            SpaceMonoFont = new Font("Arial", Font.PLAIN, 15);
+        }
+
         jLabel1.setText("User Name");
+        jLabel1.setFont(SpaceMonoFont);
         jLabel1.setForeground(Color.WHITE);
+
+        Font Orbitron3Font;
+        try {
+            Orbitron3Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/resources/Orbitron-VariableFont_wght.ttf"))
+                    .deriveFont(Font.BOLD, 48f); // Ajusta el tamaño aquí
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            Orbitron3Font = new Font("Orbitron", Font.BOLD, 48); // Fuente predeterminada en caso de error
+        }
 
         jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel2.setText("Register");
-        jLabel2.setFont(new Font("Arial", Font.BOLD, 48));
+        jLabel2.setFont(Orbitron3Font);
         jLabel2.setForeground(Color.WHITE);
 
         jLabel3.setText("Password");
+        jLabel3.setFont(SpaceMonoFont);
         jLabel3.setForeground(Color.WHITE);
 
         jLabel4.setText("Confirm Password");
+        jLabel4.setFont(SpaceMonoFont);
         jLabel4.setForeground(Color.WHITE);
 
         jLabel5.setText("Email");
+        jLabel5.setFont(SpaceMonoFont);
         jLabel5.setForeground(Color.WHITE);
 
-        RoundedButton myButton1 = new RoundedButton("CREATE ACCOUNT", 15, Color.BLACK, Color.WHITE);
-
-        /*
-        cmdBackLogin.setFont(new Font("sansserif", 1, 12));
-        cmdBackLogin.setForeground(new Color(0, 0, 0));
-        cmdBackLogin.setText("Back to Login");
-        cmdBackLogin.setContentAreaFilled(false);
-        cmdBackLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        */
+        RoundedButton myButton1 = new RoundedButton("Create account", 15, Color.BLACK, Color.WHITE);
+        myButton1.setFont(Orbitron2Font);
         
         // Evento para el botón de registro
         myButton1.addActionListener(new ActionListener() {
@@ -104,7 +123,6 @@ public class Register extends JPanel {
                 String confirmPassword = new String(txtPass1.getPassword());
 
                 if (!password.equals(confirmPassword)) {
-                    // Mostrar error de contraseña no coincidente en un JOptionPane
                     JOptionPane.showMessageDialog(Register.this, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -112,7 +130,6 @@ public class Register extends JPanel {
                 // Escribir al archivo usuarios.txt
                 escribirArchivo(username, email, password);
 
-                // Mostrar "Registro completado" en un JOptionPane
                 JOptionPane.showMessageDialog(Register.this, "Registro completado", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -131,7 +148,6 @@ public class Register extends JPanel {
                         .addComponent(jLabel3)
                         .addComponent(txtPass, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(myButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        //.addComponent(cmdBackLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addComponent(txtPass1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5))
@@ -161,7 +177,6 @@ public class Register extends JPanel {
                     .addGap(30, 30, 30)
                     .addComponent(myButton1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    //.addComponent(cmdBackLogin)
                     .addContainerGap(50, Short.MAX_VALUE))
         );
 
