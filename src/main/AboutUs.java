@@ -62,11 +62,7 @@ public class AboutUs extends JFrame {
         comboBox.setFont(SpaceMonoFont);
 
 
-        /*JLabel title2 = new JLabel("Github: ", JLabel.CENTER);
-        title2.setFont(OrbitronFont);
-        title2.setForeground(Color.WHITE);
-        title2.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backgroundPanel.add(title2);*/
+
 
         Image iconCamila = new ImageIcon(getClass().getResource("/resources/iconCamila.jpg")).getImage();
         CircularImageButton githubButton = new CircularImageButton(iconCamila, "https://github.com/ZTARSNOVA");
@@ -167,29 +163,48 @@ public class AboutUs extends JFrame {
 
         backgroundPanel.add(contentPanel);
 
+        JLabel title2 = new JLabel("Github: ", JLabel.CENTER);
+        title2.setFont(OrbitronFont);
+        title2.setForeground(Color.WHITE);
+        backgroundPanel.add(title2);
+        title2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        /*GridBagConstraints gbcGitHubLabel = new GridBagConstraints();
+        gbcGitHubLabel.gridx = 3;
+        gbcGitHubLabel.gridy = 1;
+        gbcGitHubLabel.insets = new Insets(5, 5, 0, 5);
+        backgroundPanel.add(title2, gbcGitHubLabel);*/
+
+
         // Coordenadas del githubButton
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 5, 5, 5);
         backgroundPanel.add(githubButton, gbc);
 
         // Coordenadas del borisButton
         GridBagConstraints gbcBoris = new GridBagConstraints();
-        gbcBoris.gridx = 2;
-        gbcBoris.insets = new Insets(5, 5, 5, 5);
+        gbcBoris.gridx = 3;
+        gbcBoris.gridy = 0;
+        gbcBoris.insets = new Insets(0, 5, 5, 5);
         backgroundPanel.add(borisButton, gbcBoris);
 
         // Coordenadas del ClaudioButton
         GridBagConstraints gbcClaudio= new GridBagConstraints();
-        gbcClaudio.gridx = 3;
-        gbcClaudio.insets = new Insets(5, 5, 5, 5);
+        gbcClaudio.gridx = 4;
+        gbcClaudio.gridy = 0;
+        gbcClaudio.insets = new Insets(0, 5, 5, 5);
         backgroundPanel.add(ClaudioButton, gbcClaudio);
 
         // Coordenadas del LucianaButton
         GridBagConstraints gbcLuciana= new GridBagConstraints();
-        gbcLuciana.gridx = 4;
-        gbcLuciana.insets = new Insets(5, 5, 5, 5);
+        gbcLuciana.gridx = 5;
+        gbcLuciana.gridy = 0;
+        gbcLuciana.insets = new Insets(0, 5, 5, 5);
         backgroundPanel.add(LucianaButton, gbcLuciana);
+
 
         setTitle("About Us");
     }
