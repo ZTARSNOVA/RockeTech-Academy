@@ -62,6 +62,12 @@ public class AboutUs extends JFrame {
         comboBox.setFont(SpaceMonoFont);
 
 
+        /*JLabel title2 = new JLabel("Github: ", JLabel.CENTER);
+        title2.setFont(OrbitronFont);
+        title2.setForeground(Color.WHITE);
+        title2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backgroundPanel.add(title2);*/
+
         Image iconCamila = new ImageIcon(getClass().getResource("/resources/iconCamila.jpg")).getImage();
         CircularImageButton githubButton = new CircularImageButton(iconCamila, "https://github.com/ZTARSNOVA");
 
@@ -185,7 +191,7 @@ public class AboutUs extends JFrame {
         gbcLuciana.insets = new Insets(5, 5, 5, 5);
         backgroundPanel.add(LucianaButton, gbcLuciana);
 
-
+        setTitle("About Us");
     }
 
     // Clase para el fondo del panel

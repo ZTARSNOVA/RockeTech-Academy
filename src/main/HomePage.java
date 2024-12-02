@@ -85,7 +85,7 @@ public class HomePage extends JFrame {
         }
 
         // Botón "Programs"
-        RoundedButton programsButton = new RoundedButton("Programs", 15, Color.YELLOW, Color.BLACK);
+        RoundedButton programsButton = new RoundedButton("Forum", 15, Color.YELLOW, Color.BLACK);
         programsButton.setFont(Orbitron2Font);
         programsButton.setBounds(400, 45, 150, 30);
         backgroundPanel.add(programsButton);
@@ -132,7 +132,8 @@ public class HomePage extends JFrame {
         // Las paginas (clases) navegación del Homepage
         programsButton.addActionListener(new ActionListener() { // Integrante -> Boris Alonso
             public void actionPerformed(ActionEvent e) {
-                showMessage("Programs Page");
+                new Forum().setVisible(true);
+                dispose();
             }
         });
 

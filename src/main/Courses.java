@@ -186,6 +186,7 @@ public class Courses extends JFrame {
 
 
         }});
+        setTitle("Courses");
     }
 
     // Rounded Panel class
