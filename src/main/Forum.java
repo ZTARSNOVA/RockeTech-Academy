@@ -40,8 +40,22 @@ public class Forum extends JFrame {
         title.setForeground(Color.WHITE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(title);
+        
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        contentPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between title and courses
+        Image icono = new ImageIcon(getClass().getResource("/resources/revision-positiva.png")).getImage();
+        JLabel iconoLabel = new JLabel(new ImageIcon(icono));
+        iconoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contentPanel.add(iconoLabel);
+
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between title rounded panel
+
+        JLabel body = new JLabel("Please send us any questions or suggestions using the comment box below!");
+        body.setForeground(Color.WHITE);
+        body.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contentPanel.add(body);
+
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between title rounded panel
 
         // Panel for rounded border
         RoundedPanel roundedPanel = new RoundedPanel(25, Color.yellow); // Color Rounded Panel
@@ -51,10 +65,18 @@ public class Forum extends JFrame {
 
 
         JPanel CommentPanel = new JPanel();
-        CommentPanel.setSize(400, 200);
+        CommentPanel.setSize(350, 150);
         CommentPanel.setLayout(new FlowLayout());
-        JLabel label = new JLabel("Enter your comment");
-        JTextArea text = new JTextArea(5, 20);
+        JLabel label = new JLabel("Enter your comment :");
+
+        JTextArea text = new JTextArea(2, 20);
+        /*Font codeFont = new Font("Consolas", Font.PLAIN, 14);
+        text.setFont(codeFont);
+        text.setLineWrap(true);
+        text.setWrapStyleWord(true);
+        text.setBackground(Color.BLACK);
+        text.setForeground(Color.GREEN);*/
+
         JButton button = new JButton("Submit");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
