@@ -114,7 +114,8 @@ public class Login extends JPanel {
                 String username = txtUser.getText();
                 String password = new String(txtPass.getPassword());
                 if (verificarLogin(username, password)) {
-                    JOptionPane.showMessageDialog(Login.this, "Login exitoso");
+                    //JOptionPane.showMessageDialog(Login.this, "Login exitoso");
+                    new User().setVisible(true);
                 } else {
 
                     JOptionPane.showMessageDialog(Login.this, "Los datos están incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
