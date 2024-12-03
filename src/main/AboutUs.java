@@ -39,7 +39,7 @@ public class AboutUs extends JFrame {
         }
 
 
-        // Título
+        // Título principal
         JLabel title = new JLabel("About Us", JLabel.CENTER);
         title.setFont(OrbitronFont);
         title.setForeground(Color.WHITE);
