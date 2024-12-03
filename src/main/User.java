@@ -39,11 +39,9 @@ public class User extends JFrame {
         setLayout(new BorderLayout());
 
 
-
         // Creación del JTabbedPane
         tabbedPane = new JTabbedPane();
-        tabbedPane.setPreferredSize(new Dimension(600, 400)); // Ajusta el tamaño del tabbedPane
-
+        tabbedPane.setPreferredSize(new Dimension(600, 400)); 
 
 
         // Tab 1: Registro de Cursos
