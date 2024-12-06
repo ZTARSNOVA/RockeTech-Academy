@@ -5,13 +5,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.io.File;
-import java.io.IOException;
-
+import java.io.*;
 
 public class User extends JFrame {
 
@@ -19,36 +15,66 @@ public class User extends JFrame {
     private JTextArea statusTextArea;
     private JComboBox<String> courseComboBox, teacherComboBox, timeComboBox, modalityComboBox, levelComboBox;
     private JTextField NameField, SurnameField, DNIField, DateField, PlaceField, NationalityField, AddressField, PhoneField, EmailField;
-    private JComboBox<String> genderComboBox;
-    private JComboBox<String> EducationComboBox;
-
+    private JComboBox<String> genderComboBox, EducationComboBox;
     private JLabel photoLabel;
     private File photoFile;
-    private DefaultTableModel TableModel, tTableModel;
+    private DefaultTableModel TableModel;
     private JLabel searchResultLabel;
-    private List<String[]> allcourses;
-    private List<String[]> allalumnos;
-
+    private DefaultTableModel courseTableModel; // Para los cursos
+    private DefaultTableModel studentTableModel; // Para los estudiantes
+    private List<String[]> allCourses = new ArrayList<>();
+    private List<String[]> allStudents = new ArrayList<>();
 
 
     public User() {
-
         // Configuración de la ventana principal
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximizar la ventana
         setLayout(new BorderLayout());
 
+        // el fondo personalizado
+        BackgroundPanel backgroundPanel = new BackgroundPanel(
+                new ImageIcon(getClass().getResource("/resources/FondoUI.jpeg")).getImage()
+        );
+        backgroundPanel.setLayout(new BorderLayout());
+        add(backgroundPanel, BorderLayout.CENTER);
 
-        // Creación del JTabbedPane
+
+
+        // TabbedPane
         tabbedPane = new JTabbedPane();
-        tabbedPane.setPreferredSize(new Dimension(600, 400)); 
+        tabbedPane.setPreferredSize(new Dimension(200, 500));
+        tabbedPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tabbedPane.setOpaque(false);
+        backgroundPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        backgroundPanel.add(tabbedPane, BorderLayout.CENTER);
 
 
-        // Tab 1: Registro de Cursos
+        addCourseRegistrationTab();
+        addCourseSearchTab();
+        addStudentRegistrationTab();
+        addStudentSearchTab();
 
-        JPanel tab1Panel = new JPanel(new GridLayout(7, 2, 5, 5)); // Layout con espaciado
+        // Botón Home
+        RoundedButton homeButton = new RoundedButton("Home", 15, Color.CYAN, Color.BLACK);
+        homeButton.setFont(new Font("Arial", Font.BOLD, 18));
+        homeButton.addActionListener(e -> {
+            dispose();
+            SwingUtilities.invokeLater(() -> new HomePage().setVisible(true));
+        });
 
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        buttonPanel.setOpaque(false);
+        buttonPanel.add(homeButton);
 
+        backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        setVisible(true);
+    }
+
+    // Metodos para configurar las pestañas
+    private void addCourseRegistrationTab() {
+        JPanel tab1Panel = new JPanel(new GridLayout(6, 2, 5, 5));
         tab1Panel.add(new JLabel("Select a course:"));
         courseComboBox = new JComboBox<>(new String[]{"Introduction to Programming", "Robotics", "Digital Art and Graphic Design", "Programming and Video Game Development"});
         tab1Panel.add(courseComboBox);
@@ -70,90 +96,85 @@ public class User extends JFrame {
         tab1Panel.add(levelComboBox);
 
         JButton registerButton = new JButton("Register Course");
-        registerButton.setPreferredSize(new Dimension(150, 30));
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String course = (String) courseComboBox.getSelectedItem();
-                String teacher = (String) teacherComboBox.getSelectedItem();
-                String time = (String) timeComboBox.getSelectedItem();
-                String modality = (String) modalityComboBox.getSelectedItem();
-                String level = (String) levelComboBox.getSelectedItem();
+        registerButton.addActionListener(e -> {
+            String course = (String) courseComboBox.getSelectedItem();
+            String teacher = (String) teacherComboBox.getSelectedItem();
+            String time = (String) timeComboBox.getSelectedItem();
+            String modality = (String) modalityComboBox.getSelectedItem();
+            String level = (String) levelComboBox.getSelectedItem();
 
-                if (course == null || teacher == null || time == null || modality == null || level == null) {
-                    JOptionPane.showMessageDialog(User.this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            if (course == null || teacher == null || time == null || modality == null || level == null) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("courses.txt", true))) {
-                    bw.write(course + ";" + teacher + ";" + time + ";" + modality + ";" + level);
-                    bw.newLine();
-                    JOptionPane.showMessageDialog(User.this, "Course registered successfully", "Course Registration", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(User.this, "Error registering the course", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("courses.txt", true))) {
+                String[] newCourse = {course, teacher, time, modality, level};
+                bw.write(String.join(";", newCourse));
+                bw.newLine();
+                JOptionPane.showMessageDialog(this, "Course registered successfully", "Course Registration", JOptionPane.INFORMATION_MESSAGE);
+
+                // Agregar a la lista global
+                if (allCourses == null) allCourses = new ArrayList<>();
+                allCourses.add(newCourse);
+
+                // Actualiza la tabla
+                updateTable(TableModel, allCourses);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error registering the course", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
         tab1Panel.add(registerButton);
 
         tabbedPane.addTab("Register Course", tab1Panel);
+    }
 
-        add(tabbedPane);
-
-        // Inicializar modelo de la tabla para Tab 2
-        String[] bookColumnNames = {"Course", "Teacher", "Duration", "Modality", "Level"};
-        TableModel = new DefaultTableModel(bookColumnNames, 0);
-
-        // Obtener todos los datos desde el archivo courses.txt y llenar la tabla
-        allcourses = readDataFromFile("courses.txt");
-        updateTable(TableModel, allcourses);
-
-        // Tab 2: Buscar course y mostrar en JTable
+    private void addCourseSearchTab() {
         JPanel tab2Panel = new JPanel(new BorderLayout());
-
         JPanel searchPanel = new JPanel();
         JTextField searchField = new JTextField(20);
-        JButton searchButton = new JButton("Search");
-        searchResultLabel = new JLabel();
+        JButton searchButton1 = new JButton("Search");
+        JLabel searchResultLabel = new JLabel();
         searchPanel.add(new JLabel("Search course:"));
         searchPanel.add(searchField);
-        searchPanel.add(searchButton);
+        searchPanel.add(searchButton1);
         tab2Panel.add(searchPanel, BorderLayout.NORTH);
 
-        JTable courseTable = new JTable(TableModel);
+        String[] courseColumnNames = {"Course", "Teacher", "Duration", "Modality", "Level"};
+        courseTableModel = new DefaultTableModel(courseColumnNames, 0);
+        JTable courseTable = new JTable(courseTableModel);
         JScrollPane scrollPane = new JScrollPane(courseTable);
         tab2Panel.add(scrollPane, BorderLayout.CENTER);
-        tab2Panel.add(searchResultLabel, BorderLayout.SOUTH); // Result label
+        tab2Panel.add(searchResultLabel, BorderLayout.SOUTH);
 
-        searchButton.addActionListener(new ActionListener() { //evento boton buscar
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchTerm = searchField.getText().trim();
-                boolean found = false;
-                TableModel.setRowCount(0); // Limpiar la tabla
+        searchButton1.addActionListener(e -> {
+            String searchTerm = searchField.getText().trim();
+            if (searchTerm.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a course name to search.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-                // Actualizar la lista y la tabla después de registrar el curso
-                allcourses = readDataFromFile("courses.txt");
-                updateTable(TableModel, allcourses);
+            courseTableModel.setRowCount(0);
+            allCourses = readDataFromFile("courses.txt");
 
-                for (String[] book : allcourses) {
-                    if (book[0].equalsIgnoreCase(searchTerm)) {
-                        TableModel.addRow(book);
-                        found = true;
-                    }
-                }
-
-                if (!found) {
-                    searchResultLabel.setText("Libro no encontrado");
-                } else {
-                    searchResultLabel.setText("Búsqueda encontrada!");
+            boolean found = false;
+            for (String[] course : allCourses) {
+                if (course[0].equalsIgnoreCase(searchTerm)) {
+                    courseTableModel.addRow(course);
+                    found = true;
                 }
             }
+
+            searchResultLabel.setText(found ? "Course found!" : "Course not found.");
         });
 
-        tabbedPane.addTab("Search course", tab2Panel);
+        tabbedPane.addTab("Search Course", tab2Panel);
+    }
 
+
+    private void addStudentRegistrationTab() {
         // Tab 3: Registrar alumnno
         JPanel tab3Panel = new JPanel(null);
 
@@ -262,32 +283,38 @@ public class User extends JFrame {
         registerGuestButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = NameField.getText();
-                String surname = SurnameField.getText();
-                String email = EmailField.getText();
-                String phone = PhoneField.getText();
-                String eventCode = (String) EducationComboBox.getSelectedItem();
+                String name = NameField.getText().trim();
+                String surname = SurnameField.getText().trim();
+                String dni = DNIField.getText().trim();
+                String date = DateField.getText().trim();
+                String place = PlaceField.getText().trim();
+                String gender = (String) genderComboBox.getSelectedItem();
+                String education = (String) EducationComboBox.getSelectedItem();
+                String phone = PhoneField.getText().trim();
+                String email = EmailField.getText().trim();
 
-                if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || phone.isEmpty() || eventCode.isEmpty() || photoFile == null) {
-                    JOptionPane.showMessageDialog(User.this, "Complete todos los campos y cargue una foto", "Error", JOptionPane.ERROR_MESSAGE);
+                if (name.isEmpty() || surname.isEmpty() || dni.isEmpty() || date.isEmpty() ||
+                        place.isEmpty() || gender == null || education == null || phone.isEmpty() || email.isEmpty() || photoFile == null) {
+                    JOptionPane.showMessageDialog(User.this, "Complete all fields and upload a photo.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter("alumnos.txt", true))) {
-                    bw.write(name + ";" + surname + ";" + email + ";" + phone + ";" + eventCode + ";" + photoFile.getAbsolutePath());
+                    String[] newStudent = {name, surname, dni, date, place, gender, education, phone, email, photoFile.getAbsolutePath()};
+                    bw.write(String.join(";", newStudent));
                     bw.newLine();
-                    JOptionPane.showMessageDialog(User.this, "Invitado registrado exitosamente", "Registro de Invitado", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(User.this, "Student registered successfully!", "Registration", JOptionPane.INFORMATION_MESSAGE);
 
-                    // Actualizar la lista y la tabla después de registrar el alumno
-                    allalumnos.add(new String[] { name, surname, email, phone, eventCode, photoFile.getAbsolutePath() });
-                    updateTable(TableModel, allalumnos);
+                    allStudents.add(newStudent);
+                    updateTable(studentTableModel, allStudents);
 
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(User.this, "Error al registrar el invitado", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(User.this, "Error saving student data.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+
         tab3Panel.add(registerGuestButton);
 
         JButton clearGuestButton = new JButton("Clean");
@@ -307,84 +334,71 @@ public class User extends JFrame {
         tab3Panel.add(clearGuestButton);
 
         tabbedPane.addTab("Register alumno", tab3Panel);
-
-        // Inicializar modelo de la tabla para Tab 4
-        String[] guestColumnNames = {"First Name", "Last Name", "Email", "Phone", "Educational level", "Photo"};
-        TableModel = new DefaultTableModel(guestColumnNames, 0);
-
-        // Obtener todos los datos desde el archivo alumno.txt y llenar la tabla
-        allalumnos = readDataFromFile("alumnos.txt");
-        updateTable(TableModel, allalumnos);
-
-        // Tab 4: Buscar y mostrar en JTable
-        JPanel tab4Panel = new JPanel(new BorderLayout());
-
-        JPanel guestSearchPanel = new JPanel();
-        JTextField guestSearchField = new JTextField(20);
-        JButton guestSearchButton = new JButton("Buscar");
-        JLabel guestSearchResultLabel = new JLabel();
-        guestSearchPanel.add(new JLabel("Buscar alumno:"));
-        guestSearchPanel.add(guestSearchField);
-        guestSearchPanel.add(guestSearchButton);
-        tab4Panel.add(guestSearchPanel, BorderLayout.NORTH);
-
-        JTable guestTable = new JTable(TableModel);
-        JScrollPane guestScrollPane = new JScrollPane(guestTable);
-        tab4Panel.add(guestScrollPane, BorderLayout.CENTER);
-        tab4Panel.add(guestSearchResultLabel, BorderLayout.SOUTH); // Result label
-
-        guestSearchButton.addActionListener(new ActionListener() { //evento boton buscar alumno
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchTerm = guestSearchField.getText().trim();
-                boolean found = false;
-                TableModel.setRowCount(0); // Limpiar la tabla
-
-                // Actualizar la lista y la tabla después de registrar el alumno
-                allalumnos = readDataFromFile("alumnos.txt");
-                updateTable(TableModel, allalumnos);
-
-                for (String[] guest : allalumnos) {
-                    if (guest[0].equalsIgnoreCase(searchTerm)) {
-                        TableModel.addRow(guest);
-                        found = true;
-                    }
-                }
-
-                if (!found) {
-                    guestSearchResultLabel.setText("alumno encontrado");
-                } else {
-                    guestSearchResultLabel.setText("Búsqueda encontrada!");
-                }
-            }
-        });
-
-        tabbedPane.addTab("Buscar alumno", tab4Panel);
-
-        // Agregar el JTabbedPane al JFrame
-        add(tabbedPane);
-
-        // Configuración del área de estado
-        statusTextArea = new JTextArea(5, 40);
-        statusTextArea.setEditable(false);
-        add(new JScrollPane(statusTextArea), BorderLayout.SOUTH);
-
-        // Mostrar la ventana
-        setVisible(true);
     }
 
+    private void addStudentSearchTab() {
+        JPanel tab4Panel = new JPanel(new BorderLayout());
+        JPanel searchPanel = new JPanel();
+        JTextField searchField = new JTextField(20);
+        JButton searchButton2 = new JButton("Search");
+        JLabel searchResultLabel = new JLabel();
+
+        searchPanel.add(new JLabel("Search student by DNI:"));
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton2);
+        tab4Panel.add(searchPanel, BorderLayout.NORTH);
+
+        String[] studentColumnNames = {"Name", "Surname", "DNI", "Date of Birth", "Place of Birth", "Gender",
+                "Education Level", "Phone", "Email"};
+        studentTableModel = new DefaultTableModel(studentColumnNames, 0);
+        JTable studentTable = new JTable(studentTableModel);
+        JScrollPane scrollPane = new JScrollPane(studentTable);
+        tab4Panel.add(scrollPane, BorderLayout.CENTER);
+        tab4Panel.add(searchResultLabel, BorderLayout.SOUTH);
+
+        searchButton2.addActionListener(e -> {
+            String searchTerm = searchField.getText().trim();
+            boolean found = false;
+            studentTableModel.setRowCount(0); // Limpiar tabla
+
+            // Cargar estudiantes desde el archivo
+            allStudents = readDataFromFile("alumnos.txt");
+            if (allStudents.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No students found in the database.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            for (String[] student : allStudents) {
+                if (student[2].equalsIgnoreCase(searchTerm)) { // Buscar por DNI (índice 2)
+                    studentTableModel.addRow(student);
+                    found = true;
+                }
+            }
+
+            searchResultLabel.setText(found ? "Student found!" : "Student not found.");
+        });
+
+
+
+        tabbedPane.addTab("Search Student", tab4Panel);
+    }
+
+
+
     // Metodo para leer datos desde un archivo y retornarlos como una lista de arrays de Strings
-    private List<String[]> readDataFromFile(String filename) {
+    private List<String[]> readDataFromFile(String fileName) {
         List<String[]> data = new ArrayList<>();
-        // BufferedReader
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(";");
-                data.add(parts);
+                String[] row = line.split(";");
+                if (row.length >= 7) {
+                    data.add(row);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error reading file: " + fileName, "Error", JOptionPane.ERROR_MESSAGE);
         }
         return data;
     }
@@ -396,13 +410,15 @@ public class User extends JFrame {
         // Limpiar tabla actual
         tableModel.setRowCount(0);
 
-        // Llenar la tabla con los datos
+
         for (String[] row : data) {
             tableModel.addRow(row);
         }
     }
 
-    class BackgroundPanel extends JPanel {
+
+    // el fondo personalizado
+    private static class BackgroundPanel extends JPanel {
         private Image image;
 
         public BackgroundPanel(Image image) {
@@ -416,14 +432,43 @@ public class User extends JFrame {
         }
     }
 
+    public class RoundedButton extends JButton {
+        private Color backgroundColor;
+        private Color textColor;
+
+        public RoundedButton(String text, int arcWidth, Color backgroundColor, Color textColor) {
+            super(text);
+            this.backgroundColor = backgroundColor;
+            this.textColor = textColor;
+            setFocusPainted(false);
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setOpaque(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        
+            g2.setColor(backgroundColor);
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+
+        
+            g2.setColor(textColor);
+            g2.setFont(getFont());
+            FontMetrics fm = g2.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(getText())) / 2;
+            int y = (getHeight() + fm.getAscent()) / 2 - fm.getDescent();
+            g2.drawString(getText(), x, y);
+
+            g2.dispose();
+        }
+    }
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new User();
-            }
-        });
+        SwingUtilities.invokeLater(User::new);
     }
 }
